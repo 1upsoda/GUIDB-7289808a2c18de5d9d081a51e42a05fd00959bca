@@ -24,22 +24,28 @@ import javax.swing.SpringLayout;
 
 
 
+
 import database.controller.DBAppController;
 import database.controller.DBController;
+import database.model.QueryInfo;
 
 public class dataPanel extends JPanel
 {
 
 	private DBAppController baseController;
+	private DBController infoController;
 	private JButton queryButton, saveButton, loadButton;
 	private SpringLayout baseLayout;
 	private String table;
 	private ArrayList<JTextField> fieldList;
+	private ArrayList<QueryInfo> queryList;
 
 	public dataPanel(DBAppController baseController, String table)
 	{
+		infoController = new DBController(baseController);
 		this.baseController = baseController;
 		this.table = table;
+		
 		baseLayout = new SpringLayout();
 		queryButton = new JButton("Show Query");
 		saveButton = new JButton("Save");
@@ -49,6 +55,7 @@ public class dataPanel extends JPanel
 		baseLayout.putConstraint(SpringLayout.NORTH, loadButton, 0, SpringLayout.NORTH, this);
 		baseLayout.putConstraint(SpringLayout.EAST, loadButton, -78, SpringLayout.EAST, this);
 		fieldList = new ArrayList<JTextField>();
+		queryList = new ArrayList<QueryInfo>();
 		
 		setupPanel(table);
 		setupListeners();
@@ -257,5 +264,64 @@ public class dataPanel extends JPanel
 			
 		}
 	}
+
+	public void saveInfo()
+	{
+		try
+		{
+			File saveFile = new File("asd.save");
+			PrintWriter writer = new PrintWriter(saveFile);
+			if(saveFile.exists())
+			{
+				for(QueryInfo current : queryList)
+				{
+					writer.println(current.getQuery());
+					writer.println(current.getQueryTime());
+				}
+				writer.close();
+				JOptionPane.showMessageDialog(null, queryList.size() + " QueryInfo objects were saved");
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null,  "File not present. No QueryInfo objects saved");
+			}
+			
+		}
+		catch(IOException currentError)
+		{
+			infoController.displayErrors(currentError);
+		}
+	}
+		
+	public void loadInfo()
+	{
+		try
+		{
+			File loadFile = new File("asd.save");
+			if(loadFile.exists())
+			{
+				queryList.clear();
+				Scanner textScanner = new Scanner(loadFile);
+				while(textScanner.hasNext())
+				{
+					queryList.add(new QueryInfo(textScanner.next(), textScanner.nextLong(), true));
+					textScanner.next();
+				}
+				textScanner.close();
+				JOptionPane.showMessageDialog(null, queryList.size() + " QueryInfo objects were loaded");
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null,  "File not present. No QueryInfo objects loaded");
+			}
+			
+		}
+		catch(IOException currentError)
+		{
+			infoController.displayErrors(currentError);
+		}
+	}
+		
+	
 
 }

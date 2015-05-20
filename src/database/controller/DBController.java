@@ -33,7 +33,8 @@ public class DBController
 	public DBController(DBAppController baseController)
 	{
 		this.baseController = baseController;
-		this.connectionString = "jdbc:mysql://10.228.5.160/book_reading?user=t.parsons&password=pars901";
+//		this.connectionString = "jdbc:mysql://10.228.5.160/book_reading?user=t.parsons&password=pars901";
+		this.connectionString = "jdbc:mysql://localhost/information_schema?user=root";
 		queryTime = 0;
 		checkDriver();
 		setupConnection();
@@ -82,7 +83,7 @@ public class DBController
 			endTime = System.currentTimeMillis();
 			displayErrors(currentError);
 		}
-		baseController.getQueryList().add(new QueryInfo(query, endTime - startTime));
+		baseController.getQueryList().add(new QueryInfo(query, endTime - startTime, true));
 	}
 	/**
 	 * makes sure nothing crashes it when you want to close the database
@@ -191,7 +192,7 @@ public class DBController
 
 		}
 		queryTime = endTime-startTime;
-		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime));
+		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime, true));
 		return results;
 	}
 
@@ -247,7 +248,7 @@ public class DBController
 
 		}
 		queryTime = endTime-startTime;
-		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime));
+		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime, true));
 		return results;
 	}
 	/**
@@ -288,7 +289,7 @@ public class DBController
 
 		}
 		queryTime = endTime-startTime;
-		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime));
+		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime, true));
 		return columns;
 	}
 	public String[] getDatabaseColumnNames(String tableName)
@@ -325,7 +326,7 @@ public class DBController
 
 		}
 		queryTime = endTime-startTime;
-		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime));
+		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime, true));
 		return columns;
 	}
 	/**
@@ -372,7 +373,7 @@ public class DBController
 			displayErrors(dropError);
 		}
 		queryTime = endTime-startTime;
-		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime));
+		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime, true));
 	}
 
 	/**
@@ -424,7 +425,7 @@ public class DBController
 
 		}
 		queryTime = endTime-startTime;
-		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime));
+		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime, true));
 		return results;
 	}
 
@@ -464,7 +465,7 @@ public class DBController
 			displayErrors(currentError);
 		}
 		queryTime = endTime-startTime;
-		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime));
+		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime, true));
 		return tableNames;
 	}
 
@@ -511,7 +512,7 @@ public class DBController
 			displayErrors(currentError);
 		}
 		queryTime = endTime-startTime;
-		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime));
+		baseController.getQueryList().add(new QueryInfo(currentQuery, queryTime, true));
 		return rowsAffected;
 	}
 

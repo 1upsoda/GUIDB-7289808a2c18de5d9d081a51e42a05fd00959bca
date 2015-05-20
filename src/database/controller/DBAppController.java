@@ -42,9 +42,9 @@ public class DBAppController
 		queryList = new ArrayList<QueryInfo>();
 
 		baseFrame = new dataFrame(this);
-		QueryInfo a = new QueryInfo("lol",2);
-		QueryInfo b = new QueryInfo("llo",3);
-		QueryInfo c = new QueryInfo("olo",780);
+		QueryInfo a = new QueryInfo("lol",2, true);
+		QueryInfo b = new QueryInfo("llo",3,false);
+		QueryInfo c = new QueryInfo("olo",780,true);
 		queryList.add(a);
 		queryList.add(b);
 		queryList.add(c);
@@ -114,7 +114,7 @@ public class DBAppController
 				{
 					String query = textScanner.nextLine();
 					textScanner.next();
-					queryList.add(new QueryInfo(query, textScanner.nextLong()));
+					queryList.add(new QueryInfo(query, textScanner.nextLong(), true));
 				}
 				textScanner.close();
 				JOptionPane.showMessageDialog(getBaseFrame(), queryList.size() + " QueryInfo objects were loaded into the application");

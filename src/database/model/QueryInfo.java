@@ -11,16 +11,19 @@ public class QueryInfo
 	 */
 	private long queryTime;
 	
+	private boolean isLocal;
+	
 	/**
 	 * Constructor for a QueryInfo object. Must supply a String and long parameters so 
 	 * all needed information is available at construction.
 	 * @param query The query being executed.
 	 * @param queryTime The time it took to execute the query.
 	 */
-	public QueryInfo(String query, long queryTime)
+	public QueryInfo(String query, long queryTime, boolean isLocal)
 	{
 		this.query = query;
 		this.queryTime = queryTime;
+		this.isLocal = isLocal;
 	}
 
 	/**
@@ -32,6 +35,10 @@ public class QueryInfo
 		return query;
 	}
 
+	public boolean getIsLocal()
+	{
+		return isLocal;
+	}
 	/**
 	 * Getter for the execution time of the query.
 	 * @return The time for this QueryInfo.
